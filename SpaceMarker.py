@@ -22,6 +22,25 @@ pygame.display.set_icon(icone_game)
 pygame.display.set_caption("Space Marker")
 font = pygame.font.Font(None,20)
 
+linha1 = font.render("Pressione F10 para salvar os pontos do jogo", True, WHITE)
+linha2 = font.render("Pressione F11 para carregar os pontos do jogo", True, WHITE)
+linha3 = font.render("Pressione F12 para apagar os pontos do jogo", True, WHITE)
+
+def render_points():
+    window.blit(background_image, (0, 0))
+
+    for i in range(len(points)):
+        point, name = points[i]
+        pygame.draw.circle(window, BLU, point, 5)
+        text = font.render(f"{name} - {point}", True, BLU_LINHA)
+        window.blit(text, (point[0] + 10, point[1] + 10))
+        if i > 0:
+            pygame.draw.line(window, BLU_LINHA, points[i - 1][0], point, 2)
+    window.blit(linha1, (10, 10))
+    window.blit(linha2, (20, 25))
+    window.blit(linha3, (30, 40))
+    pygame.display.flip()
+
 running = True
 while running:
     for event in pygame.event.get():
@@ -50,6 +69,6 @@ while running:
                 points.append((point, name))
 
     render_points()
-    
+
 #Quit Pygame
 pygame.quit()
