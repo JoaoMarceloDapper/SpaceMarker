@@ -4,6 +4,9 @@ from tkinter import Tk, simpledialog
 from tkinter import messagebox
 import os
 
+#Joao Marcelo Dapper
+#1135024
+
 pygame.init()
 WIDTH = 1000
 HEIGHT = 563
