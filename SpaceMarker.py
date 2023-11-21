@@ -8,8 +8,7 @@ pygame.init()
 WIDTH = 1000
 HEIGHT = 563
 WHITE = (255, 255, 255)
-BLU = (30, 144, 255)
-BLU_LINHA = (30, 144, 255)
+WHITE_LINHA = (30, 144, 255)
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Marker")
 
@@ -26,20 +25,38 @@ linha1 = font.render("Pressione F10 para salvar os pontos do jogo", True, WHITE)
 linha2 = font.render("Pressione F11 para carregar os pontos do jogo", True, WHITE)
 linha3 = font.render("Pressione F12 para apagar os pontos do jogo", True, WHITE)
 
+linha1_pos = (0, 1)
+linha2_pos = (0, linha1.get_height())
+linha3_pos = (0, linha1.get_height() + linha2.get_height())
+
+points = []
+
+ajuda = {}
+
 def render_points():
     window.blit(background_image, (0, 0))
 
     for i in range(len(points)):
         point, name = points[i]
-        pygame.draw.circle(window, BLU, point, 5)
-        text = font.render(f"{name} - {point}", True, BLU_LINHA)
+        pygame.draw.circle(window, WHITE, point, 5)
+        text = font.render(f"{name} - {point}", True, WHITE_LINHA)
         window.blit(text, (point[0] + 10, point[1] + 10))
         if i > 0:
-            pygame.draw.line(window, BLU_LINHA, points[i - 1][0], point, 2)
+            pygame.draw.line(window, WHITE_LINHA, points[i - 1][0], point, 2)
     window.blit(linha1, (10, 10))
     window.blit(linha2, (20, 25))
     window.blit(linha3, (30, 40))
     pygame.display.flip()
+
+def open_dialog():
+    root = Tk()
+    root.withdraw()
+    name = simpledialog.askstring("Nome do Ponto:", "Digite o nome do ponto:")
+    root.destroy()
+    if name:
+        return name
+    else:
+        return "Desconhecido"
 
 running = True
 while running:
@@ -69,6 +86,4 @@ while running:
                 points.append((point, name))
 
     render_points()
-
-#Quit Pygame
 pygame.quit()
